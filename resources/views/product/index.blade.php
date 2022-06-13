@@ -47,7 +47,7 @@
           </div>
           @foreach ($products as $product)
             <a href="{{ route('show',[$product]) }}">
-                <img width="100" height="70" src="/images/{{ $product->gallery }}" class="img-thumbnail m-1 mt-2" alt="...">
+                <img width="100" height="70" src="/storage/{{ $product->gallery }}" class="img-thumbnail m-1 mt-2" alt="...">
             </a>
             
           @endforeach

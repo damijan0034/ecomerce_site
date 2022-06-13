@@ -48,7 +48,7 @@ class AdminController extends Controller
 
        $image=$request->file('gallery');
        $imageName=time() .'.'.$image->extension();
-       $image->move(public_path('images'),$imageName);
+       $image->move(public_path('/storage'),$imageName);
 
     //    $product=new Product();
 
@@ -106,7 +106,7 @@ class AdminController extends Controller
 
        $image=$request->file('gallery');
        $imageName=time() .'.'.$image->extension();
-       $image->move(public_path('images'),$imageName);
+       $image->move(public_path('/storage'),$imageName);
 
     //    $product=new Product();
 
