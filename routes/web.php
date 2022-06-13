@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
+use App\Http\Middleware\Admin;
 use Database\Seeders\ProductSeeder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::get("/",[ProductController::class,'index'])->name('product.index');
-Route::get("/product/{product:slug}",[ProductController::class,'show'])->name('product.show');
+Route::get("/product/{product:slug}",[ProductController::class,'show'])->name('show');
 Route::get("search",[ProductController::class,'search'])->name('search');
 
 Route::middleware(['auth'])->group(function(){
@@ -31,7 +32,7 @@ Route::middleware(['auth'])->group(function(){
     Route::delete('/cartdelete/{cart}',[ProductController::class,'cartDelete'])->name('cartdelete');
 });
 
-Route::middleware(['auth'])->prefix('admin')->group( function ()
+Route::middleware(['auth','admin'])->prefix('admin')->group( function ()
 {
     Route::resource('/product',AdminController::class);
     Route::get('product/{product}',[AdminController::class,'show'])->name('product.show');

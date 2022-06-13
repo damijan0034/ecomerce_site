@@ -14,10 +14,10 @@ class Product extends Model
 
     protected $guarded=[];
     //accesors
-    public function getNameAttribute($value)
-    {
-        return ucfirst($value);
-    }
+    // public function getNameAttribute($value)
+    // {
+    //     return ucfirst($value);
+    // }
 
     //mutators
     public function setNameAttribute($value)

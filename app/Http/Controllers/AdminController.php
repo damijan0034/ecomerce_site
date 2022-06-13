@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -13,7 +14,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $allProducts=Product::all();
+        
+        return view('admin.index',compact('allProducts'));
     }
 
     /**
@@ -23,7 +26,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.create');
     }
 
     /**
@@ -34,7 +37,32 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $request->validate([
+            'name'=>'required',
+            'price'=>'required',
+            'category'=>'required',
+            'description'=>'required',
+            'gallery'=>'mimes:png,jpg,jpeg'
+        ]);
+
+       $image=$request->file('gallery');
+       $imageName=time() .'.'.$image->extension();
+       $image->move(public_path('images'),$imageName);
+
+    //    $product=new Product();
+
+        Product::create([
+            'name'=>$request->name,
+            'price'=>$request->price,
+            'category'=>$request->category,
+            'description'=>$request->description,
+            'gallery'=>$imageName
+        ]);
+        // $product->save();
+
+        return redirect(route('product.index'));
+
     }
 
     /**
@@ -43,9 +71,9 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product)
     {
-        //
+        return view('admin.show',compact('product'));
     }
 
     /**
@@ -54,9 +82,9 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        return view('admin.edit',compact('product'));
     }
 
     /**
@@ -66,9 +94,33 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'price'=>'required',
+            'category'=>'required',
+            'description'=>'required',
+            'gallery'=>'mimes:png,jpg,jpeg'
+        ]);
+
+       $image=$request->file('gallery');
+       $imageName=time() .'.'.$image->extension();
+       $image->move(public_path('images'),$imageName);
+
+    //    $product=new Product();
+
+        $product->update([
+            'name'=>$request->name,
+            'price'=>$request->price,
+            'category'=>$request->category,
+            'description'=>$request->description,
+            'gallery'=>$imageName
+        ]);
+        // $product->save();
+
+        return redirect(route('product.index'));
+
     }
 
     /**
@@ -77,8 +129,10 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return redirect(route('product.index'));
     }
 }
