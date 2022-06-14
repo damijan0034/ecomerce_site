@@ -9,7 +9,7 @@
             <div class=" row searched-item cart-list-devider">
              <div class="col-md-5">
                 <a href="detail/{{$cart->id}}">
-                    <img  class="trending-image m-3" src="/images/{{$cart->product->gallery}}">
+                    <img  class="trending-image m-3" src="/storage/{{$cart->product->gallery}}">
                   </a>
              </div>
              <div class="col-md-4">
